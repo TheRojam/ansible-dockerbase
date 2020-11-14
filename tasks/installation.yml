@@ -1,0 +1,65 @@
+---
+- name: Ensure old versions of Docker are not installed.
+  package:
+    name:
+      - docker
+      - docker-engine
+    state: absent
+
+- name: Ensure dependencies are installed.
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - gnupg2
+    state: present
+
+- name: Install Docker.
+  package:
+    name: "{{ docker_package }}"
+    state: "{{ docker_package_state }}"
+  notify: restart docker
+
+- name: Check current docker-compose version.
+  command: docker-compose --version
+  register: docker_compose_current_version
+  changed_when: false
+  failed_when: false
+
+- name: Delete existing docker-compose version if it's different.
+  file:
+    path: "{{ docker_compose_path }}"
+    state: absent
+  when: >
+    docker_compose_current_version.stdout is defined
+    and docker_compose_version not in docker_compose_current_version.stdout
+
+- name: Install Docker Compose (if configured).
+  get_url:
+    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64
+    dest: "{{ docker_compose_path }}"
+    mode: 0755
+    #environment:
+    #  http_proxy:  "{{ http_proxy }}"
+    #  https_proxy: "{{ http_proxy }}"
+
+- name: ensure packages 4 nginx are installed
+  apt:
+    pkg:
+      - nginx
+      - nginx-common
+      - nginx-core
+      - python3-pip
+      - python-pip
+    state: present
+
+- name: ensure python docker tools are installed
+  pip:
+    name:
+      - docker
+      - docker-compose
+      #environment:
+      #  http_proxy:  "{{ http_proxy }}"
+      #  https_proxy: "{{ http_proxy }}"
+
+# vim: tabstop=2 shiftwidth=2

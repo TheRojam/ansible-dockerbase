@@ -1,0 +1,33 @@
+---
+- name: Ensure Docker is started and enabled at boot.
+  service:
+    name: docker
+    state: "{{ docker_service_state }}"
+    enabled: "{{ docker_service_enabled }}"
+
+- name: Ensure handlers are notified now to avoid firewall conflicts.
+  meta: flush_handlers
+- name: Ensure docker users are added to the docker group.
+  user:
+    name: "{{ item.key }}"
+    groups: docker
+    append: true
+  with_dict:
+    - "{{ users }}"
+
+- name: create docker.service.d/ if not exists"
+  file:
+    path: "/etc/systemd/system/docker.service.d"
+    state: directory
+    mode: 0755
+    group: root
+    owner: root
+
+    #- name: Push docker-proxy conf
+    #  template:
+    #    src: docker-proxy.j2
+    #    dest: "/etc/systemd/system/docker.service.d/http-proxy.conf"
+    #    owner: root
+    #    group: root
+    #    mode: u=rw,g=r,o=r
+    #  notify: restart docker
