@@ -6,14 +6,17 @@ galaxy_info:
   role_name: 'dockerhost'
   author: 'therojam <github@therojam.tech'
   description: 'This is the ansible dockerhost'
-  min_ansible_version: '2.0.0'
+  min_ansible_version: '2.9.0'
   platforms:
     - name: Ubuntu
       versions:
         - bionic
         - focal
-    - name: EL
+        - groovy
+        - hirsute
+    - name: Debian 
       versions:
-        - 6
-        - 7
+        - bullseye
+        - buster
+        - sid  
   galaxy_tags: []

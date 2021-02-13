@@ -1,12 +1,12 @@
 ---
+# in case your enviroment is behind an proxy server
+# then proxy usage set to yes or true.
+proxy_usage:
 http_proxy: 1.2.3.4::8080
 https_proxy: 1.2.3.4:8080
 http_noproxy: localhost,127.0.0.1,::1,
 
-user: [] # this should be a dict``
-
-path_typo: /data/www-1-1x
-path_nc: /data/docker-1-1-0
+user: [] # this should be a dict
 
 nextcloud_port: 10005
 docker:
@@ -30,7 +30,9 @@ docker_restart_handler_state: restarted
 
 # Docker Compose options.
 docker_install_compose: true
-docker_compose_version: "1.26.0"
+# please check the latest version on 
+# https://docs.docker.com/compose/install/
+docker_compose_version: "1.28.0"
 docker_compose_path: /usr/local/bin/docker-compose
 
 # Used only for Debian/Ubuntu. Switch 'stable' to 'edge' if needed.

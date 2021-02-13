@@ -1,47 +1,48 @@
 ---
-#- name: Insert HTTP_PROXY to /etc/environment
-#  blockinfile:
-#    path: /etc/environment
-#    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
-#    insertafter: "PATH"
-#    block: |
-#      export HTTP_PROXY="{{ http_proxy }}"
-#      export HTTPS_PROXY="{{ http_proxy }}"
-#      export http_proxy="{{ http_proxy }}"
-#      export https_proxy="{{ http_proxy }}"
-#      export no_proxy= "{{ http_noproxy }}"
+- name: Insert HTTP_PROXY to /etc/environment
+  ansible.builtin.blockinfile:
+    path: /etc/environment
+    marker: "<!-- {mark} ANSIBLE MANAGED BLOCK -->"
+    insertafter: "PATH"
+    block: |
+      export HTTP_PROXY="{{ http_proxy }}"
+      export HTTPS_PROXY="{{ http_proxy }}"
+      export http_proxy="{{ http_proxy }}"
+      export https_proxy="{{ http_proxy }}"
+      export no_proxy= "{{ http_noproxy }}"
+  when: proxy_usage is defined
 
-#- name: push apt-proxy-conf file
-#  template:
-#    src: apt-proxy.j2
-#    dest: /etc/apt/apt.conf.d/proxy.conf
-#    owner: root
-#    group: root
-#    mode: u+rw,g-wx,o-wx
+- name: push apt-proxy-conf file
+  ansible.builtin.template:
+    src: apt-proxy.j2
+    dest: /etc/apt/apt.conf.d/proxy.conf
+    owner: root
+    group: root
+    mode: u+rw,g-wx,o-wx
+  when: proxy_usage is defined
 
 - name: Update apt packages
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: 86400 #One day
 
 - name: Add Docker apt key.
-  apt_key:
+  ansible.builtin.apt_key:
     url: "{{ docker_apt_gpg_key }}"
     id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
     state: present
-  environment:
-    http_proxy:  "{{ http_proxy }}"
-    https_proxy: "{{ http_proxy }}"
+#  environment:
+#    http_proxy:  "{{ http_proxy }}"
+#    https_proxy: "{{ http_proxy }}"
 
 - name: Add Docker repository.
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ docker_apt_repository }}"
     state: present
     update_cache: true
 
 - name: Update apt packages
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: 86400 #One day
 
-# vim:ft=ansible:
