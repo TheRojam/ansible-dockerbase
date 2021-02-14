@@ -1,6 +1,6 @@
-# ROLE dockerhost
+# ansible-role dockerhost
 
-This role creates an docker host on debian based systems
+This role creates an docker host on debian based systems like ubuntu
 
 ## Requirements
 
@@ -31,7 +31,7 @@ passed in as parameters) is always nice for users too:
 
 ## License
 
-(GPL v 3) [https://www.gnu.org/licenses/gpl-3.0.html]
+[GPL v 3](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ## Author Information
 
