@@ -8,16 +8,6 @@ http_noproxy: localhost,127.0.0.1,::1,
 
 user: [] # this should be a dict
 
-nextcloud_port: 10005
-docker:
-  - nextcloud:
-    tenant: prod
-    settings:
-    - name: prod_storage
-      prod_name: storage.example.com
-      dev_name: nc-dev.example.com
-      server_port: '{{ nextcloud_port }}'
-
 # Edition can be one of: 'ce' (Community Edition) or 'ee' (Enterprise Edition).
 docker_edition: 'ce'
 docker_package: "docker-{{ docker_edition }}"
