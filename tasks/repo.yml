@@ -10,7 +10,7 @@
       export http_proxy="{{ http_proxy }}"
       export https_proxy="{{ http_proxy }}"
       export no_proxy= "{{ http_noproxy }}"
-  when: proxy_usage == yes
+  when: proxy_usage =="yes"
 
 - name: push apt-proxy-conf file
   ansible.builtin.template:
@@ -19,7 +19,7 @@
     owner: root
     group: root
     mode: u+rw,g-wx,o-wx
-  when: proxy_usage == yes
+  when: proxy_usage =="yes"
 
 - name: Update apt packages
   ansible.builtin.apt:

@@ -32,4 +32,4 @@
     group: root
     mode: u=rw,g=r,o=r
     notify: restart docker
-  when: proxy_usage == yes
+  when: proxy_usage =="yes"
