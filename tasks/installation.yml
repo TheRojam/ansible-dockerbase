@@ -46,9 +46,7 @@
 - name: ensure packages 4 nginx are installed
   ansible.builtin.apt:
     pkg:
-      - nginx
-      - nginx-common
-      - nginx-core
+      - nginx-light
       - python3-pip
       - python-pip
     state: present
