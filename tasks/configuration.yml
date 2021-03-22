@@ -15,6 +15,7 @@
     append: true
   with_dict:
     - "{{ users }}"
+  when: users is defined
 
 - name: create docker.service.d/ if not exists"
   ansible.builtin.file:
