@@ -1,12 +1,12 @@
 ---
-- name: Ensure old versions of Docker are not installed.
+- name: Ensure old versions of Docker are not installed
   ansible.builtin.package:
     name:
       - docker
       - docker-engine
     state: absent
 
-- name: Ensure dependencies are installed.
+- name: Ensure dependencies for docker packages are installed
   ansible.builtin.apt:
     name:
       - apt-transport-https
@@ -14,19 +14,19 @@
       - gnupg2
     state: present
 
-- name: Install Docker.
+- name: Install Docker
   ansible.builtin.package:
     name: "{{ docker_package }}"
     state: "{{ docker_package_state }}"
   notify: restart docker
 
-- name: Check current docker-compose version.
+- name: Check current docker-compose version
   ansible.builtin.command: docker-compose --version
   register: docker_compose_current_version
   changed_when: false
   failed_when: false
 
-- name: Delete existing docker-compose version if it's different.
+- name: Delete existing docker-compose version if it's different
   ansible.builtin.file:
     path: "{{ docker_compose_path }}"
     state: absent
@@ -34,7 +34,7 @@
     docker_compose_current_version.stdout is defined
     and docker_compose_version not in docker_compose_current_version.stdout
 
-- name: Install Docker Compose (if configured).
+- name: Install Docker Compose (if configured)
   ansible.builtin.get_url:
     url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64
     dest: "{{ docker_compose_path }}"
@@ -65,6 +65,7 @@
     name:
       - docker
       - docker-compose
+      - setuptools
 # environment:
 #   http_proxy:  "{{ http_proxy }}"
 #   https_proxy: "{{ http_proxy }}"
