@@ -52,7 +52,7 @@
   when: ansible_distribution == 'Debian'
       
       
-- name: ensure packages 4 nginx are installed on ubuntu system
+- name: ensure packages 4 nginx and python-pip are installed on ubuntu system
   ansible.builtin.apt:
     pkg:
       - nginx-light
@@ -63,9 +63,9 @@
 - name: ensure python docker tools are installed
   ansible.builtin.pip:
     name:
+      - setuptools
       - docker
       - docker-compose
-      - setuptools
 # environment:
 #   http_proxy:  "{{ http_proxy }}"
 #   https_proxy: "{{ http_proxy }}"
