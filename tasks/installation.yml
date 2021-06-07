@@ -57,13 +57,13 @@
     pkg:
       - nginx-light
       - python3-pip
+      - python3-setuptools
     state: present
   when: ansible_distribution == 'Ubuntu'
 
 - name: ensure python docker tools are installed
   ansible.builtin.pip:
     name:
-      - setuptools
       - docker
       - docker-compose
 # environment:
