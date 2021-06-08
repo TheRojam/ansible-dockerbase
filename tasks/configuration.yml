@@ -13,8 +13,7 @@
     name: "{{ item.key }}"
     groups: docker
     append: true
-  with_dict:
-    - "{{ users }}"
+  with_loop: "{{ users }}"
   when: users is defined
 
 - name: create docker.service.d/ if not exists"
@@ -32,5 +31,5 @@
     owner: root
     group: root
     mode: u=rw,g=r,o=r
-    notify: restart docker
+  notify: restart docker
   when: proxy_usage =="yes"
