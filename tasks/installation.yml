@@ -43,23 +43,13 @@
 #   http_proxy:  "{{ http_proxy }}"
 #   https_proxy: "{{ http_proxy }}"
 
-- name: ensure packages 4 nginx are installed on debian system
-  ansible.builtin.apt:
-    pkg:
-      - nginx-light
-      - python-pip
-    state: present
-  when: ansible_distribution == 'Debian'
-      
-      
-- name: ensure packages 4 nginx and python-pip are installed on ubuntu system
+- name: ensure packages 4 nginx are installed on debian based systems
   ansible.builtin.apt:
     pkg:
       - nginx-light
       - python3-pip
       - python3-setuptools
     state: present
-  when: ansible_distribution == 'Ubuntu'
 
 - name: ensure python docker tools are installed
   ansible.builtin.pip:
