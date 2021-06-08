@@ -11,17 +11,20 @@
     - 'role::dockerhost:install'
     - 'role::dockerhost:config'
 
-- ansible.builtin.import_tasks: repo.yml
+- name: import tasks for defining/enabling the docker repo
+  ansible.builtin.import_tasks: repo.yml
   tags:
     - 'role::dockerhost'
     - 'role::dockerhost:repo'
 
-- ansible.builtin.import_tasks: installation.yml
+- name: import tasks for docker installation
+  ansible.builtin.import_tasks: installation.yml
   tags:
     - 'role::dockerhost'
     - 'role::dockerhost:install'
 
-- ansible.builtin.import_tasks: configuration.yml
+- name: import tasks for docker configuration
+  ansible.builtin.import_tasks: configuration.yml
   tags:
     - 'role::dockerhost'
     - 'role::dockerhost:config'
