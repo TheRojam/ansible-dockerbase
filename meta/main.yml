@@ -5,6 +5,7 @@ dependencies: []
 galaxy_info:
   role_name: 'dockerhost'
   author: 'therojam <github@therojam.tech'
+  namespace: therojam
   description: 'This is the ansible dockerhost'
   min_ansible_version: '2.9.0'
   license: GPL
