@@ -13,7 +13,7 @@
     name: "{{ item.key }}"
     groups: docker
     append: true
-  with_loop: "{{ users }}"
+  loop: "{{ users }}"
   when: users is defined
 
 - name: create docker.service.d/ if not exists"
