@@ -19,12 +19,9 @@
     owner: root
     group: root
     mode: u+rw,g-wx,o-wx
+  notify: apt update
   when: proxy_usage =="yes"
 
-- name: Update apt packages
-  ansible.builtin.apt:
-    update_cache: yes
-    cache_valid_time: 86400 #One day
 
 - name: Add Docker apt key.
   ansible.builtin.apt_key:
@@ -39,8 +36,4 @@
   ansible.builtin.apt_repository:
     repo: "{{ docker_apt_repository }}"
     state: present
-
-- name: Update apt packages
-  ansible.builtin.apt:
-    update_cache: yes
-    cache_valid_time: 86400 #One day
+  notify: apt update
